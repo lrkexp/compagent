@@ -36,6 +36,7 @@ async function loadData() {
   return response.json();
 }
 
+async function loadBriefingData() {
 async function loadData() {
   try {
     const payload = await fetchJson(DATA_URL);
@@ -240,6 +241,7 @@ async function refreshData() {
   elements.articlesContainer.innerHTML = '<p class="loading">Loading the latest briefing…</p>';
 
   try {
+    const { payload, usedFallback } = await loadBriefingData();
     const { payload, usedFallback } = await loadData();
     state.data = payload;
     state.usedFallback = usedFallback;
