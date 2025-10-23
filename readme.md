@@ -1,7 +1,7 @@
-# Clubessential Compliance Intelligence Dashboard
+# Compliance Intelligence Dashboard
 
 This repository powers a GitHub Pages site that tracks privacy, cybersecurity,
-and regulatory updates for the Clubessential Holdings SaaS portfolio serving
+and regulatory updates for the SaaS portfolio serving
 Golf &amp; Club, Fitness, and Parks &amp; Recreation markets. The site is designed for
 compliance leaders who need a quick, structured snapshot without installing a
 local Python environment.
