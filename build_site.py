@@ -29,11 +29,14 @@ def parse_args() -> argparse.Namespace:
             " Defaults to a local artifacts directory so generated files don't"
             " disturb tracked site assets."
         ),
+        default=Path("docs/data/latest.json"),
+        help="Path where the structured JSON payload will be written.",
     )
     parser.add_argument(
         "--output-markdown",
         type=Path,
         default=Path("artifacts/latest.md"),
+        default=Path("reports/latest.md"),
         help="Optional path for a Markdown snapshot (set to '-' to skip).",
     )
     parser.add_argument(

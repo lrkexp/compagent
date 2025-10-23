@@ -13,6 +13,7 @@ permissions:
 concurrency:
   group: 'pages'
   cancel-in-progress: false
+  contents: write
 
 jobs:
   build:
@@ -20,6 +21,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -53,3 +56,16 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Generate static dashboard payload
+        run: python build_site.py --output-json docs/data/latest.json --output-markdown reports/latest.md
+      - name: Commit and push changes
+        run: |
+          git add docs/data/latest.json reports/latest.md
+          if git diff --cached --quiet; then
+            echo "No updates detected"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git commit -m "chore: update compliance briefing"
+            git push
+          fi

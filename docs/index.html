@@ -51,6 +51,75 @@
         </div>
       </footer>
     </div>
+    <title>Compliance Intelligence</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <h1>Compliance Intelligence</h1>
+        <p class="tagline">
+          Daily privacy, cybersecurity, and regulatory updates for Golf &amp; Club, Fitness, and Parks &amp; Recreation SaaS teams.
+        </p>
+        <p class="meta" id="generatedAt">Loading latest briefing…</p>
+      </div>
+    </header>
+    <main class="container">
+      <section class="card" id="snapshot">
+        <h2>Snapshot</h2>
+        <ul>
+          <li><strong>Total relevant items:</strong> <span id="totalItems">–</span></li>
+          <li><strong>Sources scanned:</strong> <span id="sourcesList">–</span></li>
+        </ul>
+        <div class="breakdowns">
+          <div>
+            <h3>Vertical focus</h3>
+            <ul id="verticalBreakdown"></ul>
+          </div>
+          <div>
+            <h3>Compliance themes</h3>
+            <ul id="complianceBreakdown"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="filters">
+        <h2>Filters</h2>
+        <div class="filter-grid">
+          <label>
+            Vertical
+            <select id="verticalFilter">
+              <option value="all">All verticals</option>
+            </select>
+          </label>
+          <label>
+            Compliance lens
+            <select id="complianceFilter">
+              <option value="all">All themes</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="card" id="articles">
+        <h2>Headlines</h2>
+        <div id="articlesContainer" class="articles-container">
+          <p class="loading">Collecting the latest intelligence…</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>
+          Questions or additional feeds to monitor? Reach out to the Clubessential Holdings compliance office.
+        </p>
+        <p class="meta">
+          The static dashboard refreshes automatically via GitHub Actions once per day.
+        </p>
+      </div>
+    </footer>
+
     <script type="module" src="app.js"></script>
   </body>
 </html>
