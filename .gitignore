@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+
+# Generated artifacts
+artifacts/
+site/
+docs/data/latest.json
+reports/latest.md
+reports/*.html
+reports/*.pdf
