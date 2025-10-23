@@ -1,0 +1,37 @@
+name: Daily compliance briefing
+
+on:
+  schedule:
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Generate static dashboard payload
+        run: python build_site.py --output-json docs/data/latest.json --output-markdown reports/latest.md
+      - name: Commit and push changes
+        run: |
+          git add docs/data/latest.json reports/latest.md
+          if git diff --cached --quiet; then
+            echo "No updates detected"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git commit -m "chore: update compliance briefing"
+            git push
+          fi
