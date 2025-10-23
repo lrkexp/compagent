@@ -1,0 +1,98 @@
+{
+  "verticals": {
+    "golf_club": {
+      "label": "Golf & Club",
+      "keywords": [
+        "golf club",
+        "club management",
+        "private club",
+        "membership club",
+        "golf resort",
+        "country club",
+        "caddie",
+        "tee sheet",
+        "golf operations"
+      ]
+    },
+    "fitness": {
+      "label": "Fitness & Wellness",
+      "keywords": [
+        "fitness club",
+        "gym operator",
+        "health club",
+        "boutique fitness",
+        "personal training",
+        "studio management",
+        "athletic club",
+        "spin studio",
+        "pilates studio"
+      ]
+    },
+    "parks_recreation": {
+      "label": "Parks & Recreation",
+      "keywords": [
+        "parks and recreation",
+        "parks department",
+        "parks & recreation",
+        "community recreation",
+        "parks software",
+        "municipal recreation",
+        "recreation center",
+        "aquatics center",
+        "youth sports",
+        "parks agency"
+      ]
+    }
+  },
+  "compliance": {
+    "data_privacy": {
+      "label": "Data Privacy & Protection",
+      "keywords": [
+        "data privacy",
+        "gdpr",
+        "cpra",
+        "personal data",
+        "pii",
+        "privacy regulation",
+        "consent management",
+        "lawful basis",
+        "cross-border transfer",
+        "data minimization"
+      ]
+    },
+    "cybersecurity": {
+      "label": "Cybersecurity & Resilience",
+      "keywords": [
+        "cybersecurity",
+        "cyber security",
+        "ransomware",
+        "phishing",
+        "incident response",
+        "vulnerability",
+        "patch management",
+        "zero-day",
+        "threat actor",
+        "security breach",
+        "malware",
+        "supply chain attack"
+      ]
+    },
+    "regulatory_compliance": {
+      "label": "Regulatory & Industry Compliance",
+      "keywords": [
+        "regulatory compliance",
+        "regulatory update",
+        "compliance deadline",
+        "oversight body",
+        "enforcement action",
+        "sec compliance",
+        "soc 2",
+        "iso 27001",
+        "pci dss",
+        "hipaa",
+        "safeguarding",
+        "legal obligation"
+      ]
+    }
+  }
+}

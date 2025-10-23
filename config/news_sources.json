@@ -1,0 +1,49 @@
+{
+  "sources": [
+    {
+      "name": "IAPP Daily Dashboard",
+      "url": "https://iapp.org/daily-dashboard/feed/"
+    },
+    {
+      "name": "SecurityWeek Compliance",
+      "url": "https://www.securityweek.com/category/compliance/feed/"
+    },
+    {
+      "name": "Help Net Security",
+      "url": "https://www.helpnetsecurity.com/feed/"
+    },
+    {
+      "name": "Infosecurity Magazine",
+      "url": "https://www.infosecurity-magazine.com/rss/news/"
+    },
+    {
+      "name": "HIPAA Journal",
+      "url": "https://hipaajournal.com/feed/"
+    },
+    {
+      "name": "Club Industry",
+      "url": "https://www.clubindustry.com/rss.xml",
+      "topics": ["fitness"]
+    },
+    {
+      "name": "Athletic Business",
+      "url": "https://www.athleticbusiness.com/.rss/full/",
+      "topics": ["fitness", "parks_recreation"]
+    },
+    {
+      "name": "Golf Business News",
+      "url": "https://www.golfbusinessnews.com/feed/",
+      "topics": ["golf_club"]
+    },
+    {
+      "name": "Club + Resort Business",
+      "url": "https://clubandresortbusiness.com/feed/",
+      "topics": ["golf_club"]
+    },
+    {
+      "name": "NRPA Parks & Recreation Magazine",
+      "url": "https://www.nrpa.org/rss/news-articles/",
+      "topics": ["parks_recreation"]
+    }
+  ]
+}
