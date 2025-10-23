@@ -83,6 +83,38 @@ After editing configuration files, let the scheduled workflow run (or execute
 └── .github/workflows/update-report.yml  # Daily automation
 ```
 
+## Troubleshooting merge conflicts
+
+If a pull request reports "This branch has conflicts that must be resolved"
+for files such as `docs/index.html` or `build_site.py`, follow one of the
+workflows below to reconcile your branch with `main`.
+
+### Resolve directly on GitHub
+
+1. Open the pull request and press **Resolve conflicts**.
+2. For each conflicted file, keep the desired block of code and remove the Git
+   conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`). The **Preview** tab helps
+   you confirm the final content.
+3. Click **Mark as resolved** and then **Commit merge**.
+4. Re-run the **Update daily compliance briefing** workflow (or press the
+   dashboard refresh button) to make sure the site still renders correctly.
+
+### Resolve locally with Git
+
+```bash
+git checkout work                   # switch to your feature branch
+git fetch origin
+git merge origin/main               # bring in the latest published changes
+# edit the listed files to remove conflict markers and keep the right content
+python build_site.py --offline --limit 5  # optional: sanity-check the result
+git add docs/index.html docs/app.js docs/styles.css build_site.py readme.md
+git commit                          # record the resolution
+git push                            # update the branch so the PR can merge
+```
+
+Once the branch rebases or merges cleanly, GitHub will update the pull request
+status and enable the **Merge** button.
+
 ## Support
 
 For questions, suggestions, or additional feeds to monitor, contact the
