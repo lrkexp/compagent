@@ -1,0 +1,4 @@
+{
+  "request_timeout": 20,
+  "max_items_per_source": 25
+}
