@@ -6,6 +6,13 @@ on:
   workflow_dispatch:
 
 permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
   contents: write
 
 jobs:
@@ -22,6 +29,33 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: pip install -r requirements.txt
+      - name: Prepare workspace
+        run: rm -rf site artifacts
+      - name: Generate briefing payloads
+        run: python build_site.py --output-json site/data/latest.json --output-markdown site/reports/latest.md
+      - name: Stage static assets for Pages
+        run: |
+          mkdir -p site/data
+          mkdir -p site/reports
+          cp docs/index.html site/index.html
+          cp docs/app.js site/app.js
+          cp docs/styles.css site/styles.css
+          cp docs/data/sample.json site/data/sample.json
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
       - name: Generate static dashboard payload
         run: python build_site.py --output-json docs/data/latest.json --output-markdown reports/latest.md
       - name: Commit and push changes

@@ -107,6 +107,7 @@ def fetch_feed(source: NewsSource, timeout: int = 20, max_items: int | None = No
     """Fetch and parse a feed, returning normalized news items."""
 
     LOGGER.debug("Fetching feed %s", source.url)
+    request = Request(source.url, headers={"User-Agent": "saas-compliance-intelligence/1.0"})
     request = Request(source.url, headers={"User-Agent": "clubessential-compliance-agent/1.0"})
     try:
         with urlopen(request, timeout=timeout) as response:  # type: ignore[call-arg]

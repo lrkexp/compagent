@@ -3,6 +3,54 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SaaS Compliance Intelligence</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="masthead">
+        <div class="masthead-inner">
+          <div class="masthead-copy">
+            <h1>SaaS Compliance Intelligence</h1>
+            <p class="tagline">
+              Daily privacy, cybersecurity, and regulatory context for Golf &amp; Club, Fitness, and Parks &amp; Recreation SaaS teams.
+            </p>
+          </div>
+          <div class="masthead-controls">
+            <button id="refreshButton" class="refresh-button" type="button">Refresh briefing</button>
+            <p class="meta" id="generatedAt">Awaiting refresh…</p>
+          </div>
+        </div>
+      </header>
+      <main class="content" aria-live="polite">
+        <section class="summary-card" aria-labelledby="summaryHeading">
+          <h2 id="summaryHeading">At a glance</h2>
+          <div class="summary-stats">
+            <div>
+              <span class="summary-value" id="totalItems">–</span>
+              <span class="summary-label">Relevant updates</span>
+            </div>
+            <div>
+              <span class="summary-value" id="sourceCount">–</span>
+              <span class="summary-label">Sources scanned</span>
+            </div>
+          </div>
+          <p class="sources" id="sourcesList">Sources will appear after the first refresh.</p>
+        </section>
+        <section class="briefing" aria-labelledby="briefingHeading">
+          <h2 id="briefingHeading">Daily briefing</h2>
+          <div id="articlesContainer" class="briefing-list">
+            <p class="loading">Click “Refresh briefing” to load the latest updates.</p>
+          </div>
+        </section>
+      </main>
+      <footer class="footer">
+        <div class="footer-inner">
+          <p>Maintained by the global compliance operations team.</p>
+          <p class="meta">This dashboard refreshes automatically each day via GitHub Actions. Use the refresh button for the most recent published data.</p>
+        </div>
+      </footer>
+    </div>
     <title>Compliance Intelligence</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
