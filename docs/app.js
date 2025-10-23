@@ -1,4 +1,5 @@
 const DATA_URL = 'data/latest.json';
+const SAMPLE_DATA_URL = 'data/sample.json';
 
 const elements = {
   refreshButton: document.querySelector('#refreshButton'),
@@ -12,14 +13,35 @@ const elements = {
 const state = {
   data: null,
   isLoading: false,
+  usedFallback: false,
 };
 
-async function loadData() {
-  const response = await fetch(DATA_URL, { cache: 'no-cache' });
+async function fetchJson(url) {
+  const response = await fetch(url, { cache: 'no-cache' });
   if (!response.ok) {
-    throw new Error(`Failed to load data (${response.status})`);
+    const error = new Error(`Failed to load data (${response.status})`);
+    error.status = response.status;
+    error.url = url;
+    throw error;
   }
   return response.json();
+}
+
+async function loadData() {
+  try {
+    const payload = await fetchJson(DATA_URL);
+    return { payload, usedFallback: false };
+  } catch (primaryError) {
+    console.warn('Primary data request failed. Attempting to use sample payload.', primaryError);
+    try {
+      const fallbackPayload = await fetchJson(SAMPLE_DATA_URL);
+      return { payload: fallbackPayload, usedFallback: true };
+    } catch (fallbackError) {
+      const error = new Error('Unable to load compliance briefing data.');
+      error.cause = { primaryError, fallbackError };
+      throw error;
+    }
+  }
 }
 
 function formatDate(isoString, { includeTime = true, timeZone } = {}) {
@@ -79,22 +101,38 @@ function flattenArticles(data) {
   });
 }
 
-function updateSummary(data) {
+function updateSummary(data, { usedFallback = false } = {}) {
   const summary = data?.summary ?? {};
   const sources = Array.isArray(summary.sources) ? summary.sources : [];
 
-  elements.generatedAt.textContent = data?.generated_at
-    ? `Last refreshed ${formatDate(data.generated_at, { timeZone: 'UTC' })}`
-    : 'Last refreshed: unavailable';
+  if (usedFallback) {
+    if (data?.generated_at) {
+      elements.generatedAt.textContent = `Sample briefing from ${formatDate(data.generated_at, {
+        timeZone: 'UTC',
+      })} – live feed unavailable.`;
+    } else {
+      elements.generatedAt.textContent = 'Sample briefing loaded – live feed unavailable.';
+    }
+  } else {
+    elements.generatedAt.textContent = data?.generated_at
+      ? `Last refreshed ${formatDate(data.generated_at, { timeZone: 'UTC' })}`
+      : 'Last refreshed: unavailable';
+  }
 
   elements.totalItems.textContent = typeof summary.total_items === 'number'
     ? summary.total_items
     : '0';
 
   elements.sourceCount.textContent = sources.length ? String(sources.length) : '0';
-  elements.sourcesList.textContent = sources.length
-    ? `Sources: ${sources.join(' • ')}`
-    : 'No sources captured in the latest run.';
+  if (usedFallback) {
+    elements.sourcesList.textContent = sources.length
+      ? `Offline preview – sample sources: ${sources.join(' • ')}`
+      : 'Offline preview shown while the live data endpoint is unavailable.';
+  } else {
+    elements.sourcesList.textContent = sources.length
+      ? `Sources: ${sources.join(' • ')}`
+      : 'No sources captured in the latest run.';
+  }
 }
 
 function renderArticles(articles) {
@@ -193,12 +231,20 @@ async function refreshData() {
   elements.articlesContainer.innerHTML = '<p class="loading">Loading the latest briefing…</p>';
 
   try {
-    const data = await loadData();
-    state.data = data;
-    updateSummary(data);
-    renderArticles(flattenArticles(data));
+    const { payload, usedFallback } = await loadData();
+    state.data = payload;
+    state.usedFallback = usedFallback;
+    if (usedFallback) {
+      document.body.classList.add('using-fallback-data');
+    } else {
+      document.body.classList.remove('using-fallback-data');
+    }
+    updateSummary(payload, { usedFallback });
+    renderArticles(flattenArticles(payload));
   } catch (error) {
     console.error(error);
+    document.body.classList.remove('using-fallback-data');
+    state.usedFallback = false;
     elements.generatedAt.textContent = 'Unable to refresh – please try again later.';
     elements.totalItems.textContent = '0';
     elements.sourceCount.textContent = '0';

@@ -6,7 +6,13 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -14,24 +20,36 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - name: Install dependencies
         run: pip install -r requirements.txt
-      - name: Generate static dashboard payload
-        run: python build_site.py --output-json docs/data/latest.json --output-markdown reports/latest.md
-      - name: Commit and push changes
+      - name: Prepare workspace
+        run: rm -rf site artifacts
+      - name: Generate briefing payloads
+        run: python build_site.py --output-json site/data/latest.json --output-markdown site/reports/latest.md
+      - name: Stage static assets for Pages
         run: |
-          git add docs/data/latest.json reports/latest.md
-          if git diff --cached --quiet; then
-            echo "No updates detected"
-          else
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git commit -m "chore: update compliance briefing"
-            git push
-          fi
+          mkdir -p site/data
+          mkdir -p site/reports
+          cp docs/index.html site/index.html
+          cp docs/app.js site/app.js
+          cp docs/styles.css site/styles.css
+          cp docs/data/sample.json site/data/sample.json
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
