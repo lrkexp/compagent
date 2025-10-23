@@ -1,0 +1,26 @@
+[
+  {
+    "source": "Club + Resort Business",
+    "title": "UK golf clubs adjust member data policies ahead of new GDPR guidance",
+    "link": "https://example.com/golf-gdpr-guidance",
+    "published": "2024-05-15T08:30:00",
+    "summary": "Private golf club operators across the UK are updating consent management workflows in their membership software to align with fresh GDPR enforcement priorities on cross-border transfer of personal data.",
+    "categories": ["Golf", "Data Privacy"]
+  },
+  {
+    "source": "Club Industry",
+    "title": "Boutique fitness franchises bolster cybersecurity playbooks after ransomware surge",
+    "link": "https://example.com/fitness-ransomware",
+    "published": "2024-05-22T12:00:00",
+    "summary": "Fitness club SaaS providers are mandating patch management reviews and incident response tabletop exercises for franchisees after ransomware disrupted scheduling platforms across North America.",
+    "categories": ["Fitness", "Cybersecurity"]
+  },
+  {
+    "source": "NRPA Parks & Recreation Magazine",
+    "title": "Municipal recreation departments face new reporting deadlines for accessibility compliance",
+    "link": "https://example.com/parks-regulation",
+    "published": "2024-05-28T09:15:00",
+    "summary": "Parks and recreation agencies using cloud-based registration systems must document regulatory compliance programs as new oversight body guidance aligns with legal obligations for safeguarding youth programs.",
+    "categories": ["Parks & Recreation", "Regulatory"]
+  }
+]
